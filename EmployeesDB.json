@@ -1,0 +1,9 @@
+[ {
+  "id" : 71,
+  "firstName" : "Mohamed",
+  "lastName" : "Ahmed",
+  "dateOfBirth" : 946684800000,
+  "salary" : 1000.0,
+  "joinDate" : 1684368000000,
+  "department" : "IT"
+} ]
