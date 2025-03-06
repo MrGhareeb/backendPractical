@@ -43,6 +43,6 @@ public record EmployeesRecord(
 
         public EmployeesRecord withGeneratedID(){
                 Random randomGenerated= new Random();
-                return new EmployeesRecord(randomGenerated.nextInt(1000), firstName, lastName, dateOfBirth, salary, joinDate, department);
+                return new EmployeesRecord(randomGenerated.nextInt(120), firstName, lastName, dateOfBirth, salary, joinDate, department);
         }
 }
