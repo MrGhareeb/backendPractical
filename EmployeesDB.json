@@ -6,4 +6,12 @@
   "salary" : 1000.0,
   "joinDate" : 1684368000000,
   "department" : "IT"
+}, {
+  "id" : 46,
+  "firstName" : "name1",
+  "lastName" : "name2",
+  "dateOfBirth" : 0,
+  "salary" : 5330.0,
+  "joinDate" : 1715990400000,
+  "department" : "HR"
 } ]
