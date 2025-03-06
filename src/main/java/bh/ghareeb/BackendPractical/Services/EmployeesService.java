@@ -4,10 +4,14 @@ import bh.ghareeb.BackendPractical.Components.ConfigComponent;
 import bh.ghareeb.BackendPractical.Records.EmployeesRecord;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -19,7 +23,6 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeesService {
     private String jsonPath;
-
 
     private static final Logger logger = LoggerFactory.getLogger(EmployeesService.class);
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -48,6 +51,20 @@ public class EmployeesService {
         }
     }
 
+    private void writeJson() {
+        try{
+            this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+            File file = new File(this.jsonPath);
+            BufferedWriter writer = new BufferedWriter( new FileWriter( this.jsonPath ));
+            writer.write(this.objectMapper.writeValueAsString(this.employeesRecordList));
+            writer.close();
+            writer.flush();
+        }catch (Exception e){
+            logger.error("An error occurred: {}", e.getMessage(), e);
+        }
+    }
+
+
     /**
      * Get all the employees from the json file
      * @return List of all the employees
@@ -56,8 +73,11 @@ public class EmployeesService {
         return employeesRecordList;
     }
 
-    public void setRecordList(EmployeesRecord newEmployeesRecord) {
-        this.employeesRecordList.add(newEmployeesRecord);
+    public Integer setRecordList(EmployeesRecord newEmployeesRecord) {
+        EmployeesRecord recordWithGeneratedID = newEmployeesRecord.withGeneratedID();
+        this.employeesRecordList.add(recordWithGeneratedID);
+        this.writeJson();
+        return recordWithGeneratedID.id();
     }
 
     /**
@@ -107,7 +127,7 @@ public class EmployeesService {
 
                     .collect(Collectors.toList());
         } catch (Exception e) {
-
+            logger.error("An error occurred: {}", e.getMessage(), e);
         }
 
         if (result.isEmpty()) return null;

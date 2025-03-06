@@ -2,9 +2,12 @@ package bh.ghareeb.BackendPractical.Controllers;
 
 import bh.ghareeb.BackendPractical.Records.EmployeesRecord;
 import bh.ghareeb.BackendPractical.Services.EmployeesService;
+import org.apache.coyote.Response;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -24,6 +27,14 @@ public class EmployeesController {
     @GetMapping("/{id}")
     public Optional<EmployeesRecord> GetEmployees(@PathVariable Integer id) {
         return employeesService.getEmployees(id);
+    }
+
+    @PostMapping
+    public Map<String, Integer> SetEmployees(@RequestBody EmployeesRecord newEmployeesRecord) {
+        Integer generatedId = this.employeesService.setRecordList(newEmployeesRecord);
+        Map<String, Integer> response = new HashMap<>();
+        response.put("id",generatedId);
+        return response;
     }
 
 

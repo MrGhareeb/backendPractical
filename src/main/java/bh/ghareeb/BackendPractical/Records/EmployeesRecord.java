@@ -1,6 +1,8 @@
 package bh.ghareeb.BackendPractical.Records;
 
 import java.util.Date;
+import java.util.Random;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 //import jakarta.persistence.GeneratedValue;
 //import jakarta.persistence.GenerationType;
@@ -39,4 +41,8 @@ public record EmployeesRecord(
         String department
 ) {
 
+        public EmployeesRecord withGeneratedID(){
+                Random randomGenerated= new Random();
+                return new EmployeesRecord(randomGenerated.nextInt(1000), firstName, lastName, dateOfBirth, salary, joinDate, department);
+        }
 }
